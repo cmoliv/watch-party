@@ -23,7 +23,7 @@ const usernameInput = document.getElementById("username-input");
 const loadVideoButton = document.getElementById("loadVideoButton");
 const chatMessageInput = document.getElementById("chat-message-input");
 
-// --- 1. Inicialização do Player do YouTube ---
+// Inicialização do Player do YouTube
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "100%",
@@ -50,7 +50,7 @@ hostBtn.addEventListener("click", async () => {
 
   // Inicia o player e o WebSocket para o host (usando o IP padrão do servidor)
   onYouTubeIframeAPIReady();
-  connectWebSocket(); // O host se conecta ao seu próprio servidor local
+  connectWebSocket();
 });
 
 // Botão para ser GUEST
@@ -61,12 +61,12 @@ guestBtn.addEventListener("click", () => {
   loadControls.classList.add("hidden");
   document.body.classList.remove("justify-center");
 
-  // Inicia o player e o WebSocket para o guest, conectando ao IP fornecido
+  // Inicia o player e o WebSocket para o guest
   onYouTubeIframeAPIReady();
   connectWebSocket();
 });
 
-// --- 2. Lógica do Player e WebSocket ---
+// Lógica do Player e WebSocket
 function onPlayerReady() {
   statusElement.textContent = "Player pronto. A ligar ao servidor...";
   setupUIEventListeners();
@@ -96,10 +96,10 @@ function onPlayerStateChange(event) {
   }
 }
 
-// --- 3. Conexão WebSocket ---
+// Conexão WebSocket
 function connectWebSocket() {
-  // const wsUrl = "ws://192.168.207.1:8080/watchparty";
-  const wsUrl = "ws://127.0.0.1:8080/watchparty";
+  const hostIP = "127.0.0.1:8080"; // Trocar para IP da máquina que está hosteando
+  const wsUrl = `ws://${hostIP}/watchparty`;
   webSocket = new WebSocket(wsUrl);
   webSocket.onopen = () =>
     (statusElement.textContent = "Ligado ao servidor de Watch Party!");
@@ -114,7 +114,7 @@ function connectWebSocket() {
       "Erro de ligação. Verifique se o servidor está a correr.");
 }
 
-// --- 4. Manipulação de Comandos ---
+// Manipulação de Comandos
 function handleServerCommand(command) {
   if (!player || typeof player.getPlayerState !== "function") return;
   isActionFromNetwork = true;
@@ -159,7 +159,7 @@ function sendCommand(command) {
   }
 }
 
-// --- 5. Lógica da UI e Eventos ---
+// Lógica da UI e Eventos
 function setupUIEventListeners() {
   loadVideoButton.addEventListener("click", () => {
     const videoId = extractVideoID(youtubeUrlInput.value.trim());
@@ -201,7 +201,7 @@ function setupUIEventListeners() {
   });
 }
 
-// --- 6. Funções Utilitárias ---
+// Funções Utilitárias
 function sendChatMessage() {
   const sender = usernameInput.value.trim();
   const message = chatMessageInput.value.trim();
