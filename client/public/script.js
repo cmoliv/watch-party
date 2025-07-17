@@ -78,10 +78,6 @@ hostBtn.addEventListener("click", async () => {
   welcomeScreen.classList.add("hidden");
   appContent.classList.remove("hidden");
   document.body.classList.remove("justify-center"); // Ajuste de estilo.
-
-  // Inicia o player do YouTube e a ligação com o servidor.
-  onYouTubeIframeAPIReady();
-  connectWebSocket();
 });
 
 /**
@@ -93,9 +89,6 @@ guestBtn.addEventListener("click", () => {
   appContent.classList.remove("hidden");
   loadControls.classList.add("hidden"); // Esconde os controlos de carregar vídeo.
   document.body.classList.remove("justify-center");
-
-  onYouTubeIframeAPIReady();
-  connectWebSocket();
 });
 
 // =================================================================
@@ -109,6 +102,7 @@ guestBtn.addEventListener("click", () => {
 function onPlayerReady() {
   statusElement.textContent = "Player pronto. A ligar ao servidor...";
   setupUIEventListeners(); // Configura todos os event listeners dos nossos botões.
+  connectWebSocket(); // Conecta ao WebSocket depois que o player está pronto.
 }
 
 /**
