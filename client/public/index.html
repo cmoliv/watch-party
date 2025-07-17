@@ -70,8 +70,10 @@
           <div id="player-wrapper">
             <div
               id="player-container"
-              class="relative w-full aspect-video bg-black rounded-t-xl shadow-2xl overflow-hidden">
-              <div id="player"></div>
+              class="relative w-full aspect-video bg-black rounded-t-xl shadow-2xl overflow-hidden"
+            >
+                <!-- Esse container será substituído pelo player do YouTube -->
+                <div id="player"></div>
             </div>
             <div
               id="custom-controls"
@@ -142,6 +144,10 @@
       </div>
     </div>
 
+    <!-- 
+        Script da API do player do YouTube 
+        documentação: https://developers.google.com/youtube/iframe_api_reference 
+    -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js" defer></script>
   </body>
